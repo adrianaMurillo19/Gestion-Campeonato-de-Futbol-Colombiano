@@ -9,9 +9,15 @@ import javax.swing.JOptionPane;
 import DAO.DBConnection;
 import DAO.EquipoDAO;
 import DAO.JugadorDAO;
-import Modelo.Equipo;
+import Modelo.*;
 import Modelo.Jugador;
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class VistaJugador extends javax.swing.JFrame {
@@ -31,7 +37,7 @@ public class VistaJugador extends javax.swing.JFrame {
         txtContrato.setText("");
         txtNumCamiseta.setText("");
         comboBoxEq.setSelectedIndex(0);//seleccionar el primer estado
-        
+        txtBuscarId.setText("");
         //limpiar la seleccion de la fila seleccionada
         tablaRegistrosJ.clearSelection();   
     }
@@ -123,9 +129,9 @@ public class VistaJugador extends javax.swing.JFrame {
         btnEliminarj = new javax.swing.JButton();
         btnLimpiarJ = new javax.swing.JButton();
         btnSalirj = new javax.swing.JButton();
+        btnBuscarJ = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtBuscarId = new javax.swing.JTextField();
-        btnBuscarJ = new javax.swing.JButton();
         jScrollPanel = new javax.swing.JScrollPane();
         tablaRegistrosJ = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
@@ -139,6 +145,8 @@ public class VistaJugador extends javax.swing.JFrame {
         jLabel1.setText("Registro de Jugadores");
 
         jLabel2.setText("N° Jugador:");
+
+        txtIdJugador.setEditable(false);
 
         jLabel3.setText("Primer Nombre:");
 
@@ -160,6 +168,13 @@ public class VistaJugador extends javax.swing.JFrame {
 
         jLabel9.setText("Duración del contrato:");
 
+        txtFechaN.setText("yyyy-mm-dd");
+        txtFechaN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaNActionPerformed(evt);
+            }
+        });
+
         btnGuardarJ.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGuardarJ.setText("Guardar");
         btnGuardarJ.addActionListener(new java.awt.event.ActionListener() {
@@ -170,9 +185,19 @@ public class VistaJugador extends javax.swing.JFrame {
 
         btnActualizarJ.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnActualizarJ.setText("Actualizar");
+        btnActualizarJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarJActionPerformed(evt);
+            }
+        });
 
         btnEliminarj.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEliminarj.setText("Eliminar");
+        btnEliminarj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarjActionPerformed(evt);
+            }
+        });
 
         btnLimpiarJ.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLimpiarJ.setText("Limpiar");
@@ -190,10 +215,15 @@ public class VistaJugador extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Consultar Jugador por ID: ");
-
         btnBuscarJ.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBuscarJ.setText("Consultar");
+        btnBuscarJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarJActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Consultar Jugador por ID: ");
 
         tablaRegistrosJ.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -223,70 +253,72 @@ public class VistaJugador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
-                .addGap(336, 336, 336)
-                .addComponent(jLabel1)
-                .addContainerGap(834, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(52, 52, 52)
-                        .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(63, 63, 63)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnGuardarJ)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizarJ)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminarj)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpiarJ)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSalirj))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(39, 39, 39)
+                        .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(98, 98, 98)
+                        .addComponent(btnBuscarJ))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(52, 52, 52)
+                                .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(69, 69, 69)
-                                .addComponent(txtIdJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(39, 39, 39)
-                                .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(63, 63, 63)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtApellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(comboBoxEq, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNumCamiseta))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(44, 44, 44)
+                                .addComponent(txtIdJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(98, 98, 98)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscarJ)
                             .addComponent(jLabel10)
-                            .addComponent(txtBuscarId, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnLimpiarJ)
-                                .addGap(32, 32, 32)
-                                .addComponent(btnSalirj))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGuardarJ)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnActualizarJ)
-                        .addGap(33, 33, 33)
-                        .addComponent(btnEliminarj)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPanel)
-                .addGap(22, 22, 22))
+                            .addComponent(txtBuscarId, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(comboBoxEq, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtNumCamiseta))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel8))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtFechaN, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(336, 336, 336)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,20 +327,18 @@ public class VistaJugador extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtIdJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtBuscarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtIdJugador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
                             .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtBuscarId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -339,21 +369,19 @@ public class VistaJugador extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(txtNumCamiseta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(comboBoxEq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnGuardarJ)
                             .addComponent(btnActualizarJ)
                             .addComponent(btnEliminarj)
                             .addComponent(btnLimpiarJ)
                             .addComponent(btnSalirj)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jScrollPanel)))
-                .addGap(30, 30, 30))
+                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -375,6 +403,46 @@ public class VistaJugador extends javax.swing.JFrame {
 
     private void btnGuardarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarJActionPerformed
         //boton para guardar los nuevos registros
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String nombreUno = txtnombre1.getText();
+        String nombreDos = txtNombre2.getText();
+        String apellidUno = txtApellido1.getText();
+        String apellidoDos = txtApellido2.getText();
+        String cedula = txtCedula.getText();
+        Date fechaNacimiento = sdf.parse(txtFechaN.getText());
+        String contrato = txtContrato.getText();
+        int camiseta = Integer.parseInt(txtNumCamiseta.getText());
+        Equipo equipoSeleccionado = (Equipo) comboBoxEq.getSelectedItem();
+        
+        Jugador jugador = new Jugador();
+        jugador.setNombreUno(nombreUno);
+        jugador.setNombreDos(nombreDos);
+        jugador.setApellidoUno(apellidUno);
+        jugador.setApellidoDos(apellidoDos);
+        jugador.setCedula(cedula);
+        jugador.setFechaNacimiento(fechaNacimiento);
+        jugador.setContrato(contrato);
+        jugador.setNumCamiseta(camiseta);
+        jugador.setEquipo_idEquipo(equipoSeleccionado.getIdEquipo());
+        
+        JugadorDAO jugadorDAO = new JugadorDAO(conn);//conexion con la BD
+        
+        boolean exito = jugadorDAO.registrarJugador(jugador);
+        
+        if(exito){
+            JOptionPane.showMessageDialog(null, "Jugador registrado exitosamente");
+            cargarTablaJugadores();
+            limpiarCampos();
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al registrar el jugador");
+        }
+        
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Error " + ex.getMessage());
+        }
+        
         
     }//GEN-LAST:event_btnGuardarJActionPerformed
 
@@ -406,6 +474,130 @@ public class VistaJugador extends javax.swing.JFrame {
             txtIdJugador.setText(tablaRegistrosJ.getValueAt(fila, 0).toString());// ID para actualizar
         }});
     }//GEN-LAST:event_tablaRegistrosJMouseClicked
+
+    private void txtFechaNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaNActionPerformed
+
+    private void btnActualizarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarJActionPerformed
+        // Boton para actualizar datos del jugador
+         String  idStr = txtIdJugador.getText();//Integer.parseInt(txtIdJugador.getText());
+         if(idStr.isEmpty())
+         {
+             JOptionPane.showMessageDialog(this, "Por favor, seleccione un jugador de la tabla para actualizar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+         }
+        try {
+            
+            Jugador jugador = new Jugador();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        jugador.setId_jugador(Integer.parseInt(txtIdJugador.getText()));
+        jugador.setNombreUno(txtnombre1.getText()); //Integer.parseInt(idStr);
+        jugador.setNombreDos(txtNombre2.getText());
+        jugador.setApellidoUno(txtApellido1.getText());
+        jugador.setApellidoDos(txtApellido2.getText());
+        jugador.setCedula(txtCedula.getText());
+        jugador.setFechaNacimiento(sdf.parse(txtFechaN.getText()));
+        jugador.setContrato(txtContrato.getText());
+        jugador.setNumCamiseta(Integer.parseInt(txtNumCamiseta.getText()));
+        Equipo equipoSeleccionado = (Equipo) comboBoxEq.getSelectedItem();
+        jugador.setEquipo_idEquipo(equipoSeleccionado.getIdEquipo());
+        
+        
+        JugadorDAO jugadorDAO = new JugadorDAO(conn);//conexion con la BD
+        
+        boolean actualizado = jugadorDAO.actualizarJugador(jugador);
+        
+        if(actualizado){
+            JOptionPane.showMessageDialog(null, "Jugador actualizado exitosamente");
+            cargarTablaJugadores();
+            limpiarCampos();
+        }else{
+            JOptionPane.showMessageDialog(null, "Error al actualizar el jugador_view");
+        }
+        
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Error " + ex.getMessage());
+        }
+        
+        
+    }//GEN-LAST:event_btnActualizarJActionPerformed
+
+    private void btnEliminarjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarjActionPerformed
+        // Boton para eliminar algun registro que seleccione
+        
+        int fila = tablaRegistrosJ.getSelectedRow();
+        
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "Seleccione un jugador a eliminar");
+            return;
+        }
+        
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Esta seguro de eliminar este registro? ", "confirmar", JOptionPane.YES_NO_OPTION);
+        int id_jugador = Integer.parseInt(tablaRegistrosJ.getValueAt(fila, 0).toString());
+        
+        JugadorDAO jugadorDAO = new JugadorDAO(conn);
+        boolean eliminado = jugadorDAO.eliminarJugador(id_jugador);
+        
+        if(eliminado){
+            JOptionPane.showMessageDialog(null, "Jugador eliminado correctamente");
+            cargarTablaJugadores();//Actualiza la tabla
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el jugador_view");
+        }
+    }//GEN-LAST:event_btnEliminarjActionPerformed
+
+    private void btnBuscarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarJActionPerformed
+        // Boton de buscar (id)
+        
+        try {
+            String idJugadorStr = txtBuscarId.getText().trim();
+            if(idJugadorStr.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un Id valido para consultar.", "campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int idJugador = Integer.parseInt(idJugadorStr);
+            
+            // Crear una instancia de JugadorDAO
+            JugadorDAO jugadorDAO = new JugadorDAO(conn);
+            
+            //Consultar el Jugador por ID
+            Jugador jugador = jugadorDAO.obtenerJugadorporId(idJugador);
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+             
+            if(jugador != null){//Si se encontró el jugador, llenar los campos de texto y comboBox con los datos ese jugador
+               
+                txtIdJugador.setText(String.valueOf(jugador.getId_jugador()));
+                txtnombre1.setText(jugador.getNombreUno());
+                txtNombre2.setText(jugador.getNombreDos());
+                txtApellido1.setText(jugador.getApellidoUno());
+                txtApellido2.setText(jugador.getApellidoDos());
+                txtCedula.setText(jugador.getCedula());
+                txtFechaN.setText(sdf.format(jugador.getFechaNacimiento()));
+                txtContrato.setText(jugador.getContrato());
+                txtNumCamiseta.setText(String.valueOf(jugador.getNumCamiseta()));
+                
+                //Seleccionar el Equipo correcto en el ComboBox
+                for (int i = 0; i < comboBoxEq.getItemCount(); i++){
+                    Equipo equipo = (Equipo) comboBoxEq.getItemAt(i);
+                    if(equipo.getIdEquipo() == jugador.getEquipo_idEquipo()){
+                        comboBoxEq.setSelectedItem(equipo);
+                        break;
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Jugador encontrado ", "Consulta Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                limpiarCampos();//se limpian los campos si no se encontrarón resultados
+                JOptionPane.showMessageDialog(this, "No se encontró ningún jugador con ese ID: " + idJugador, "Jugador no encontrado", JOptionPane.WARNING_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "El ID del jugador debe un número válido. ", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnBuscarJActionPerformed
 
     /**
      * @param args the command line arguments

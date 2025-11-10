@@ -16,6 +16,11 @@ public class Jugador {
     private String contrato;
     private int numCamiseta;
     private int Equipo_idEquipo;
+    
+    //variable(s) usada para reportes
+    private int edad;
+    
+    
 
     
     //constructor sin ID
@@ -49,6 +54,16 @@ public class Jugador {
     
     //constructor vacio
     public Jugador(){}
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    
+    
     
     public Jugador(int id_jugador){
         this.id_jugador = id_jugador;

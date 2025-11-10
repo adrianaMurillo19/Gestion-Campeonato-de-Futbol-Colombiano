@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DAO;
 
 import java.sql.Connection;
@@ -16,7 +13,7 @@ public class DBConnection {
     
     static String url="jdbc:mysql://localhost:3306/gestioncampeonato";
     static String user="root";
-   static String pass="Adr1ana123*";
+   static String pass="";
     
    //getConnection
     public static Connection conectar()
