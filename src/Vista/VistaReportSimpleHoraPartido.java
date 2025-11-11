@@ -5,7 +5,7 @@ import DAO.DBConnection;
 
 import Modelo.Partido;
 import DAO.PartidoDAO;
-import Reportes.ReportePartidos;
+import Reportes.ReportePartidosSimple;
 import java.sql.Connection;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -102,7 +102,7 @@ public class VistaReportSimpleHoraPartido extends javax.swing.JFrame {
         List<Partido> partidos = dao.obtenerTodosLosPartidos();
         
         // 2. Generar el reporte
-        ReportePartidos reporte = new ReportePartidos();
+        ReportePartidosSimple reporte = new ReportePartidosSimple();
         reporte.generarReportePartidos(partidos);
         
     } catch (Exception e) {

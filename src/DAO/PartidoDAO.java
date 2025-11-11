@@ -5,6 +5,7 @@ import Modelo.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import Modelo.Partido;
 
 public class PartidoDAO {
     
@@ -31,7 +32,7 @@ public class PartidoDAO {
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()){
-            Partido p = new Partido();
+            Partido p = new Partido(rs.getInt("idPartido"));
             p.setIdPartido(rs.getInt("idPartido"));
             p.setFechaJuego(rs.getDate("fechaJuego"));
             p.setHoraInicio(rs.getString("horaInicio"));
@@ -48,5 +49,29 @@ public class PartidoDAO {
     }
     return lista;
 }
+    
+    /**/
+    public List<Partido> obtenerTodosPartidosConsulta() {
+        
+        List<Partido> partidos = new ArrayList<>();
+        String sql = "SELECT * FROM partido";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()){
+            while (rs.next()){
+                Partido partido = new Partido(
+                          rs.getInt("idPartido"),
+                          rs.getDate("fechaJuego")
+                          );
+                
+                partidos.add(partido);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return partidos;
+    }
+    
+    
     
 }

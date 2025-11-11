@@ -13,12 +13,16 @@ public class Partido {
     private String resultadoFinal;
     private int Estadio_idEstadio;
     private int Arbitro_idUsuario;
-    
-   
-    
 
-    public Partido() {
+    public Partido(int aInt) {
     }
+
+    public Partido(int idPartido, Date fechaJuego) {
+        this.idPartido = idPartido;
+        this.fechaJuego = fechaJuego;
+    }
+    
+    
 
     public Partido(int idPartido, Date fechaJuego, String horaInicio, String resultadoFinal, int Estadio_idEstadio, int Arbitro_idUsuario) {
         this.idPartido = idPartido;

@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class ReportePartidos {
+public class ReportePartidosSimple {
     
     public void generarReportePartidos(List<Partido> partidos){
         
@@ -66,7 +66,7 @@ public class ReportePartidos {
             }
             
             documento.close();
-            JOptionPane.showMessageDialog(null, "Reporte de Calendario de Partidos generado con éxito.");
+            JOptionPane.showMessageDialog(null, "Reporte del historial de Partidos generado con éxito.");
             Desktop.getDesktop().open(new File(nombreArchivo));
             
         } catch (Exception e) {
