@@ -1,19 +1,29 @@
 package Modelo;
 
-import java.time.LocalTime;
 import java.util.Date;
+import java.time.LocalDateTime;
+
 
 public class Partido {
-
-    public int idPartido;
-    public Date fechaJuego;
-    public LocalTime horaInicio;
-    public String resultadoFinal;
-    public int Estadio_idEstadio;
-    public int Arbitro_idUsuario;
     
-    // Constructor con id
-    public Partido(int idPartido, Date fechaJuego, LocalTime horaInicio, String resultadoFinal, int Estadio_idEstadio, int Arbitro_idUsuario) {
+    private int idPartido;
+    private Date fechaJuego;
+    private String horaInicio; //Time
+    private String resultadoFinal;
+    private int Estadio_idEstadio;
+    private int Arbitro_idUsuario;
+
+    public Partido(int aInt) {
+    }
+
+    public Partido(int idPartido, Date fechaJuego) {
+        this.idPartido = idPartido;
+        this.fechaJuego = fechaJuego;
+    }
+    
+    
+
+    public Partido(int idPartido, Date fechaJuego, String horaInicio, String resultadoFinal, int Estadio_idEstadio, int Arbitro_idUsuario) {
         this.idPartido = idPartido;
         this.fechaJuego = fechaJuego;
         this.horaInicio = horaInicio;
@@ -22,8 +32,8 @@ public class Partido {
         this.Arbitro_idUsuario = Arbitro_idUsuario;
     }
 
-    // Constructor sin id
-    public Partido(Date fechaJuego, LocalTime horaInicio, String resultadoFinal, int Estadio_idEstadio, int Arbitro_idUsuario) {
+
+    public Partido(Date fechaJuego, String horaInicio, String resultadoFinal, int Estadio_idEstadio, int Arbitro_idUsuario) {
         this.fechaJuego = fechaJuego;
         this.horaInicio = horaInicio;
         this.resultadoFinal = resultadoFinal;
@@ -52,11 +62,12 @@ public class Partido {
         this.fechaJuego = fechaJuego;
     }
 
-    public LocalTime getHoraInicio() {
+
+    public String getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalTime horaInicio) {
+    public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
 
@@ -84,7 +95,6 @@ public class Partido {
         this.Arbitro_idUsuario = Arbitro_idUsuario;
     }
 
-    
     @Override
     public String toString() {
         return "Partido{" + "idPartido=" + idPartido + ", fechaJuego=" + fechaJuego + ", horaInicio=" + horaInicio + ", resultadoFinal=" + resultadoFinal + ", Estadio_idEstadio=" + Estadio_idEstadio + ", Arbitro_idUsuario=" + Arbitro_idUsuario + '}';

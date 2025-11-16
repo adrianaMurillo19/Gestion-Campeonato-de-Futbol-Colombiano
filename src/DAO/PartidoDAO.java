@@ -1,15 +1,13 @@
-
 package DAO;
 
-import Modelo.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import Modelo.Partido;
 
 public class PartidoDAO {
 
     Connection connection;
-    Partido partido;
 
     public PartidoDAO(Connection connection) {
         this.connection = connection;
@@ -17,7 +15,7 @@ public class PartidoDAO {
     
     // Registrar nuevo partido
     public boolean registrarPartido(Object obj){
-        partido = (Partido) obj;
+        Partido partido = (Partido) obj;
         boolean registrado = false;
         
         String sql = "INSERT INTO Partido (fechaJuego, horaInicio, resultadoFinal, Estadio_idEstadio, Arbitro_idUsuario) "
@@ -56,7 +54,7 @@ public class PartidoDAO {
                 
                 partido.setIdPartido(rs.getInt("idPartido"));
                 partido.setFechaJuego(rs.getDate("fechaJuego"));
-                partido.setHoraInicio(rs.getTime("horaInicio").toLocalTime());
+                partido.setHoraInicio(rs.getString("horaInicio"));
                 partido.setResultadoFinal(rs.getString("resultadoFinal"));
                 partido.setEstadio_idEstadio(rs.getInt("Estadio_idEstadio"));
                 partido.setArbitro_idUsuario(rs.getInt("Arbitro_idUsuario"));
@@ -70,7 +68,6 @@ public class PartidoDAO {
         
         return lista;
     }
-    
     
     // Actualizar partido
     public boolean actualizarPartido(Partido partido){
@@ -97,7 +94,6 @@ public class PartidoDAO {
         return actualizado;
     }
     
-    
     // Eliminar partido
     public boolean eliminarPartido(int id){
         boolean eliminado = false;
@@ -116,5 +112,81 @@ public class PartidoDAO {
         }
         
         return eliminado;
+    }
+
+    // Método de main: historial ordenado
+    public List<Partido> obtenerTodosLosPartidos(){
+        List<Partido> lista = new ArrayList<>();
+
+        String sql = "SELECT idPartido, fechaJuego, horaInicio, resultadoFinal, Estadio_idEstadio, Arbitro_idUsuario " +
+                     "FROM Partido ORDER BY fechaJuego, horaInicio";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                Partido p = new Partido();
+                p.setIdPartido(rs.getInt("idPartido"));
+                p.setFechaJuego(rs.getDate("fechaJuego"));
+                p.setHoraInicio(rs.getString("horaInicio"));
+                p.setResultadoFinal(rs.getString("resultadoFinal"));
+                p.setEstadio_idEstadio(rs.getInt("Estadio_idEstadio"));
+                p.setArbitro_idUsuario(rs.getInt("Arbitro_idUsuario"));
+
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    // Método de main
+    public List<Partido> obtenerTodosPartidosConsulta() {
+        List<Partido> partidos = new ArrayList<>();
+        String sql = "SELECT * FROM Partido";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Partido partido = new Partido(
+                    rs.getInt("idPartido"),
+                    rs.getDate("fechaJuego")
+                );
+
+                partidos.add(partido);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return partidos;
+    }
+    
+    /*Obtener el ID del partido para consultar mediante ID
+    */
+    public Partido obtenerPartidoporId(int id_partido) throws SQLException{
+        Partido partido = null;
+        
+        String sql = "SELECT idPartido, fechaJuego, horaInicio, resultadoFinal, Estadio_idEstadio, Arbitro_idUsuario FROM Partido WHERE idPartido = ?";
+    
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id_partido);
+            try (ResultSet rs = ps.executeQuery()) {
+                
+                if(rs.next()){
+                    partido = new Partido();
+                    partido.setIdPartido(rs.getInt("idPartido"));
+                    partido.setFechaJuego(rs.getDate("fechaJuego"));
+                    partido.setHoraInicio(rs.getString("horaInicio"));
+                    partido.setResultadoFinal(rs.getString("resultadoFinal"));
+                    partido.setEstadio_idEstadio(rs.getInt("Estadio_idEstadio"));
+                    partido.setArbitro_idUsuario(rs.getInt("Arbitro_idUsuario"));
+                }
+            } 
+        } 
+        return partido;
     }
 }

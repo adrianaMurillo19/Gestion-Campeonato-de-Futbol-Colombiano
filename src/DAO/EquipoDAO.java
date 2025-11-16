@@ -1,7 +1,7 @@
-
 package DAO;
 
-import Modelo.Equipo;
+import Modelo.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +37,8 @@ public class EquipoDAO {
         }
         return equipos;
     }
+    
+    
+    
     
 }

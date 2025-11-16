@@ -1,21 +1,103 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vista;
 
-/**
- *
- * @author adrii
- */
+import DAO.ArbitroDAO;
+import DAO.DBConnection;
+import DAO.EstadioDAO;
+import DAO.PartidoDAO;
+import Modelo.*;
+import Modelo.Partido;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 public class VistaPartido extends javax.swing.JFrame {
+    
+    public EstadioDAO estadioDAO;
+    public ArbitroDAO arbitroDAO;
+    Connection conn = DBConnection.conectar();
+
 
     /**
      * Creates new form VistaPartido
      */
     public VistaPartido() {
         initComponents();
+        cargarEstadiosComboBox();
+        cargarArbitrosComboBox();
+        cargarTablaPartidos();
+        setLocationRelativeTo(null);
     }
+    
+    //Funcion que es usada para limpiar los campos
+    private void limpiarCampos(){
+        txtIdPartido.setText("");
+        txtFechaJuego.setText("");
+        txtHoraInicio.setText("");
+        txtResultadoFinal.setText("");
+        txtBuscarId.setText("");
+        //limpiar la seleccion de la fila seleccionada
+        tablaRegistrosP.clearSelection();   
+    }
+    
+    /*Permite cargar el comboBox con el id y nombre de los estadios
+    */
+    private void cargarEstadiosComboBox(){
+        
+        try {
+            estadioDAO = new EstadioDAO(conn);
+            List<Estadio> estadios = estadioDAO.obtenerTodos();
+            comboBoxEstadio.removeAllItems();
+            
+            for(Estadio e: estadios)
+                comboBoxEstadio.addItem(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /*Permite cargar el comboBox con el id y nombre de los arbitros
+    */
+    private void cargarArbitrosComboBox(){
+        
+        try {
+            arbitroDAO = new ArbitroDAO(conn);
+            List<Arbitro> arbitros = arbitroDAO.obtenerTodos();
+            comboBoxArbitro.removeAllItems();
+            
+            for(Arbitro a: arbitros)
+                comboBoxArbitro.addItem(a);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /*permite invocar las funciones del modelo para cargar los datos del jugador en la tabla
+    */
+    private void cargarTablaPartidos() {
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaRegistrosP.getModel();
+        tablaRegistrosP.getTableHeader().setReorderingAllowed(false);
+        modelo.setRowCount(0);
+
+        PartidoDAO dao = new PartidoDAO(conn);
+        List<Partido> partidos = dao.obtenerPartidos();
+
+        for (Partido p : partidos) {
+            modelo.addRow(new Object[]{
+                p.getIdPartido(),
+                p.getFechaJuego(),
+                p.getHoraInicio(),
+                p.getResultadoFinal(),
+                p.getEstadio_idEstadio(),
+                p.getArbitro_idUsuario()
+            });
+        }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,7 +131,7 @@ public class VistaPartido extends javax.swing.JFrame {
         btnSalirP = new javax.swing.JButton();
         btnConsultarP = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaRegistrosP = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,10 +156,10 @@ public class VistaPartido extends javax.swing.JFrame {
 
         jLabel7.setText("N° Partido:");
 
-        comboBoxEstadio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtIdPartido.setEditable(false);
+
         comboBoxEstadio.setSelectedIndex(-1);
 
-        comboBoxArbitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboBoxArbitro.setSelectedIndex(-1);
 
         jLabel8.setText("Consultar por ID:");
@@ -96,27 +178,65 @@ public class VistaPartido extends javax.swing.JFrame {
         });
 
         btnActualizarP.setText("Actualizar");
+        btnActualizarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarPActionPerformed(evt);
+            }
+        });
 
         btnEliminarP.setText("Eliminar");
+        btnEliminarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPActionPerformed(evt);
+            }
+        });
 
         btnLimpiarP.setText("Limpiar");
+        btnLimpiarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarPActionPerformed(evt);
+            }
+        });
 
         btnSalirP.setText("Salir");
+        btnSalirP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirPActionPerformed(evt);
+            }
+        });
 
         btnConsultarP.setText("Consultar");
+        btnConsultarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarPActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaRegistrosP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "FechaJuego", "HoraInicio", "ResultadoFinal", "Estadio", "Arbitro"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tablaRegistrosP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaRegistrosPMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaRegistrosP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,37 +258,39 @@ public class VistaPartido extends javax.swing.JFrame {
                         .addComponent(btnSalirP))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel7))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(44, 44, 44)))
-                            .addComponent(jLabel6))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(13, 13, 13)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboBoxArbitro, 0, 339, Short.MAX_VALUE)
+                            .addComponent(comboBoxEstadio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtFechaJuego, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                .addComponent(txtHoraInicio)
-                                .addComponent(txtResultadoFinal)
-                                .addComponent(txtIdPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(comboBoxArbitro, 0, 180, Short.MAX_VALUE)
-                            .addComponent(comboBoxEstadio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtFechaJuego, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(txtHoraInicio)
+                            .addComponent(txtResultadoFinal)
+                            .addComponent(txtIdPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtBuscarId, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnConsultarP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(445, 445, 445)
                 .addComponent(jLabel1)
-                .addGap(357, 357, 357))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +330,7 @@ public class VistaPartido extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(comboBoxEstadio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(comboBoxArbitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
@@ -238,7 +360,198 @@ public class VistaPartido extends javax.swing.JFrame {
 
     private void btnGuardarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPActionPerformed
         // TODO add your handling code here:
+        //boton para guardar los nuevos registros
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaJuego = sdf.parse(txtFechaJuego.getText());
+            String horaInicio = txtHoraInicio.getText();
+            String resultadoFinal = txtResultadoFinal.getText();
+            Estadio estadioSeleccionado = (Estadio) comboBoxEstadio.getSelectedItem();
+            Arbitro arbitroSeleccionado = (Arbitro) comboBoxArbitro.getSelectedItem();
+
+            Partido partido = new Partido();
+            partido.setFechaJuego(fechaJuego);
+            partido.setHoraInicio(horaInicio);
+            partido.setResultadoFinal(resultadoFinal);
+            partido.setEstadio_idEstadio(estadioSeleccionado.getIdEstadio());
+            partido.setArbitro_idUsuario(arbitroSeleccionado.getId_arbitro());
+
+            PartidoDAO partidoDAO = new PartidoDAO(conn);//conexion con la BD
+
+            boolean exito = partidoDAO.registrarPartido(partido);
+
+            if(exito){
+                JOptionPane.showMessageDialog(null, "Partido registrado exitosamente");
+                cargarTablaPartidos();
+                limpiarCampos();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al registrar el partido");
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Error " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnGuardarPActionPerformed
+
+    private void btnActualizarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarPActionPerformed
+        // Boton para actualizar datos del partido
+        String idStr = txtIdPartido.getText();
+        if(idStr.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un partido de la tabla para actualizar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        try {
+            
+            Partido partido = new Partido();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            partido.setIdPartido(Integer.parseInt(txtIdPartido.getText()));
+            partido.setFechaJuego(sdf.parse(txtFechaJuego.getText()));
+            partido.setHoraInicio(txtHoraInicio.getText());
+            partido.setResultadoFinal(txtResultadoFinal.getText());
+            Estadio estadioSeleccionado = (Estadio) comboBoxEstadio.getSelectedItem();
+            partido.setEstadio_idEstadio(estadioSeleccionado.getIdEstadio());
+            Arbitro arbitroSeleccionado = (Arbitro) comboBoxArbitro.getSelectedItem();
+            partido.setArbitro_idUsuario(arbitroSeleccionado.getId_arbitro());
+
+
+            PartidoDAO partidoDAO = new PartidoDAO(conn);//conexion con la BD
+
+            boolean actualizado = partidoDAO.actualizarPartido(partido);
+
+            if(actualizado){
+                JOptionPane.showMessageDialog(null, "Partido actualizado exitosamente");
+                cargarTablaPartidos();
+                limpiarCampos();
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al actualizar el partido_view");
+            }
+        
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Error " + ex.getMessage());
+        }
+    }//GEN-LAST:event_btnActualizarPActionPerformed
+
+    private void btnEliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPActionPerformed
+        // Boton para eliminar algun registro que seleccione
+        int fila = tablaRegistrosP.getSelectedRow();
+        
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "Seleccione un partido a eliminar");
+            return;
+        }
+        
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Esta seguro de eliminar este registro? ", "confirmar", JOptionPane.YES_NO_OPTION);
+        int id_partido = Integer.parseInt(tablaRegistrosP.getValueAt(fila, 0).toString());
+        
+        PartidoDAO partidoDAO = new PartidoDAO(conn);
+        boolean eliminado = partidoDAO.eliminarPartido(id_partido);
+        
+        if(eliminado){
+            JOptionPane.showMessageDialog(null, "Partido eliminado correctamente");
+            cargarTablaPartidos();//Actualiza la tabla
+        }else{
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el partido_view");
+        }
+    }//GEN-LAST:event_btnEliminarPActionPerformed
+
+    private void btnLimpiarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarPActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarPActionPerformed
+
+    private void btnSalirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirPActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirPActionPerformed
+
+    private void btnConsultarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPActionPerformed
+        // Boton de buscar (id)
+        
+        try {
+            String idPartidoStr = txtBuscarId.getText().trim();
+            if(idPartidoStr.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un Id valido para consultar.", "campo vacío", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            int idPartido = Integer.parseInt(idPartidoStr);
+            
+            // Crear una instancia de JugadorDAO
+            PartidoDAO partidoDAO = new PartidoDAO(conn);
+            
+            //Consultar el Jugador por ID
+            Partido partido = partidoDAO.obtenerPartidoporId(idPartido);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            
+            if(partido != null){//Si se encontró el jugador, llenar los campos de texto y comboBox con los datos ese jugador
+               
+                txtIdPartido.setText(String.valueOf(partido.getIdPartido()));
+                txtFechaJuego.setText(sdf.format(partido.getFechaJuego()));
+                txtHoraInicio.setText(partido.getHoraInicio());
+                txtResultadoFinal.setText(partido.getResultadoFinal());
+                
+                //Seleccionar el Estadio correcto en el ComboBox
+                for (int i = 0; i < comboBoxEstadio.getItemCount(); i++){
+                    Estadio estadio = (Estadio) comboBoxEstadio.getItemAt(i);
+                    if(estadio.getIdEstadio() == partido.getEstadio_idEstadio()){
+                        comboBoxEstadio.setSelectedItem(estadio);
+                        break;
+                    }
+                }
+                //Seleccionar el Arbitro correcto en el ComboBox
+                for (int i = 0; i < comboBoxArbitro.getItemCount(); i++){
+                    Arbitro arbitro = (Arbitro) comboBoxArbitro.getItemAt(i);
+                    if(arbitro.getId_arbitro() == partido.getArbitro_idUsuario()){
+                        comboBoxArbitro.setSelectedItem(arbitro);
+                        break;
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Partido encontrado ", "Consulta Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                limpiarCampos();//se limpian los campos si no se encontrarón resultados
+                JOptionPane.showMessageDialog(this, "No se encontró ningún Partido con ese ID: " + idPartido, "Partido no encontrado", JOptionPane.WARNING_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "El ID del partido debe un número válido. ", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnConsultarPActionPerformed
+
+    private void tablaRegistrosPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRegistrosPMouseClicked
+        // Para poder dar clic en alguna fila
+        tablaRegistrosP.getSelectionModel().addListSelectionListener(e ->{
+        
+        if (!e.getValueIsAdjusting() && tablaRegistrosP.getSelectedRow() != -1){
+            int fila = tablaRegistrosP.getSelectedRow();
+            
+            
+            txtFechaJuego.setText(tablaRegistrosP.getValueAt(fila, 1).toString());
+            txtHoraInicio.setText(tablaRegistrosP.getValueAt(fila, 2).toString());
+            txtResultadoFinal.setText(tablaRegistrosP.getValueAt(fila, 3).toString());
+            //seleccionar en el comboBox el estadio correcto
+            int idEstadio = Integer.parseInt(tablaRegistrosP.getValueAt(fila, 4).toString());
+            for (int i = 0; i < comboBoxEstadio.getItemCount(); i++){
+                Estadio estadio = comboBoxEstadio.getItemAt(i);
+                if (estadio.getIdEstadio() == idEstadio){
+                    comboBoxEstadio.setSelectedIndex(i);
+                    break;
+                }
+            }
+            //seleccionar en el comboBox el arbitro correcto
+            int idArbitro = Integer.parseInt(tablaRegistrosP.getValueAt(fila, 5).toString());
+            for (int i = 0; i < comboBoxArbitro.getItemCount(); i++){
+                Arbitro arbitro = comboBoxArbitro.getItemAt(i);
+                if (arbitro.getId_arbitro() == idArbitro){
+                    comboBoxArbitro.setSelectedIndex(i);
+                    break;
+                }
+            }
+            txtIdPartido.setText(tablaRegistrosP.getValueAt(fila, 0).toString());// ID para actualizar
+        }});
+    }//GEN-LAST:event_tablaRegistrosPMouseClicked
 
     /**
      * @param args the command line arguments
@@ -294,7 +607,7 @@ public class VistaPartido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaRegistrosP;
     private javax.swing.JTextField txtBuscarId;
     private javax.swing.JTextField txtFechaJuego;
     private javax.swing.JTextField txtHoraInicio;
