@@ -1,5 +1,6 @@
 package DAO;
 
+import DTO.PartidoRangoFechaDTO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -189,4 +190,44 @@ public class PartidoDAO {
         } 
         return partido;
     }
+    
+    // Reporte Intermedio #5: Partidos en rango de fechas
+    public List<PartidoRangoFechaDTO> obtenerPartidosEntreFechas(Date fechaInicio, Date fechaFin) {
+
+        List<PartidoRangoFechaDTO> partidos = new ArrayList<>();
+
+        String sql = "SELECT p.idPartido, p.fechaJuego, p.horaInicio, p.resultadoFinal, " +
+                     "       e.nombre AS nombreEstadio " +
+                     "FROM Partido p " +
+                     "JOIN Estadio e ON p.Estadio_idEstadio = e.idEstadio " +
+                     "WHERE p.fechaJuego BETWEEN ? AND ? " +
+                     "ORDER BY p.fechaJuego";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setDate(1, new java.sql.Date(fechaInicio.getTime()));
+            stmt.setDate(2, new java.sql.Date(fechaFin.getTime()));
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                PartidoRangoFechaDTO dto = new PartidoRangoFechaDTO();
+
+                dto.setIdPartido(rs.getInt("idPartido"));
+                dto.setFechaJuego(rs.getDate("fechaJuego"));
+                dto.setHoraInicio(rs.getString("horaInicio"));
+                dto.setResultadoFinal(rs.getString("resultadoFinal"));
+                dto.setNombreEstadio(rs.getString("nombreEstadio"));
+
+                partidos.add(dto);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error en consulta por rango de fechas: " + e.getMessage());
+        }
+
+        return partidos;
+    }
+
 }
