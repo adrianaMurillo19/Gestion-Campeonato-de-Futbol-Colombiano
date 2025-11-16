@@ -37,7 +37,7 @@ public class Menu extends javax.swing.JFrame {
         btnReportPartidos = new javax.swing.JButton();
         btnGolesPorIDPartidoSimple = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnReporteJugadorEquipo = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -132,8 +132,13 @@ public class Menu extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Reportes Intermedios");
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton4.setText("jButton4");
+        btnReporteJugadorEquipo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnReporteJugadorEquipo.setText("Jugadores de un Equipo");
+        btnReporteJugadorEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteJugadorEquipoActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton5.setText("jButton5");
@@ -188,7 +193,7 @@ public class Menu extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btnReporteEdadJugador)
-                                            .addComponent(jButton4)
+                                            .addComponent(btnReporteJugadorEquipo)
                                             .addComponent(jLabel6)
                                             .addComponent(jButton8))
                                         .addGap(74, 74, 74)
@@ -252,7 +257,7 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton4)
+                                    .addComponent(btnReporteJugadorEquipo)
                                     .addComponent(jButton5)
                                     .addComponent(jButton6)
                                     .addComponent(jButton7))
@@ -320,6 +325,12 @@ public class Menu extends javax.swing.JFrame {
         vistaReportGolesIDPartido.setVisible(true);
     }//GEN-LAST:event_btnGolesPorIDPartidoSimpleActionPerformed
 
+    private void btnReporteJugadorEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteJugadorEquipoActionPerformed
+        // TODO add your handling code here:
+        VistaReportIntermedioJugadoresEquipo vista = new VistaReportIntermedioJugadoresEquipo();
+        vista.setVisible(true);
+    }//GEN-LAST:event_btnReporteJugadorEquipoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -364,9 +375,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnJugador;
     private javax.swing.JButton btnReportPartidos;
     private javax.swing.JButton btnReporteEdadJugador;
+    private javax.swing.JButton btnReporteJugadorEquipo;
     private javax.swing.JButton btnUsuario;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
