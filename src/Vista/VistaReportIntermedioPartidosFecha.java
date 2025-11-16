@@ -28,6 +28,7 @@ public class VistaReportIntermedioPartidosFecha extends javax.swing.JFrame {
      */
     public VistaReportIntermedioPartidosFecha() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
