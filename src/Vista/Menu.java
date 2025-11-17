@@ -43,9 +43,9 @@ public class Menu extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnReporPartidoComplejo = new javax.swing.JButton();
+        btnRepoEquipoMayorSaciones = new javax.swing.JButton();
+        btnGoleadores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,14 +148,29 @@ public class Menu extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Reportes Complejos");
 
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setText("jButton8");
+        btnReporPartidoComplejo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnReporPartidoComplejo.setText("Información Completa de un Partido");
+        btnReporPartidoComplejo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporPartidoComplejoActionPerformed(evt);
+            }
+        });
 
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setText("jButton9");
+        btnRepoEquipoMayorSaciones.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRepoEquipoMayorSaciones.setText("Equipos con Mayor Índice de Sanciones");
+        btnRepoEquipoMayorSaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRepoEquipoMayorSacionesActionPerformed(evt);
+            }
+        });
 
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton10.setText("jButton10");
+        btnGoleadores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGoleadores.setText("Máximos Goleadores y sus Equipos");
+        btnGoleadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoleadoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,15 +206,15 @@ public class Menu extends javax.swing.JFrame {
                                             .addComponent(btnReporteEdadJugador)
                                             .addComponent(jButton4)
                                             .addComponent(jLabel6)
-                                            .addComponent(jButton8))
+                                            .addComponent(btnReporPartidoComplejo))
                                         .addGap(74, 74, 74)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jButton5)
                                             .addComponent(btnReportPartidos)
-                                            .addComponent(jButton9))
+                                            .addComponent(btnRepoEquipoMayorSaciones))
                                         .addGap(89, 89, 89)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton10)
+                                            .addComponent(btnGoleadores)
                                             .addComponent(btnGolesPorIDPartidoSimple)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jButton6)
@@ -209,10 +224,8 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(209, 209, 209)
                         .addComponent(jLabel3)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +236,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
@@ -261,11 +274,11 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(jLabel6)))
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9)
-                            .addComponent(jButton10))
+                            .addComponent(btnReporPartidoComplejo)
+                            .addComponent(btnRepoEquipoMayorSaciones)
+                            .addComponent(btnGoleadores))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
@@ -321,6 +334,28 @@ public class Menu extends javax.swing.JFrame {
         vistaReportGolesIDPartido.setVisible(true);
     }//GEN-LAST:event_btnGolesPorIDPartidoSimpleActionPerformed
 
+    private void btnGoleadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoleadoresActionPerformed
+        // TODO add your handling code here:
+        
+        VistaReportGoleadoresTop vistaReportGoleadoresTop = new VistaReportGoleadoresTop();
+        vistaReportGoleadoresTop.setVisible(true);
+    }//GEN-LAST:event_btnGoleadoresActionPerformed
+
+    private void btnReporPartidoComplejoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporPartidoComplejoActionPerformed
+        // TODO add your handling code here:
+        
+        VistaReportPartidoComplejo vistaReportPartidoComplejo = new VistaReportPartidoComplejo();
+        vistaReportPartidoComplejo.setVisible(true);
+        
+    }//GEN-LAST:event_btnReporPartidoComplejoActionPerformed
+
+    private void btnRepoEquipoMayorSacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepoEquipoMayorSacionesActionPerformed
+        // TODO add your handling code here:
+        
+        VistaReportEquipoSanciones vistaReportEquipoSanciones = new VistaReportEquipoSanciones();
+        vistaReportEquipoSanciones.setVisible(true);
+    }//GEN-LAST:event_btnRepoEquipoMayorSacionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -360,19 +395,19 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnArbitro;
     private javax.swing.JButton btnDirecTecnico;
     private javax.swing.JButton btnEquipo;
+    private javax.swing.JButton btnGoleadores;
     private javax.swing.JButton btnGoles;
     private javax.swing.JButton btnGolesPorIDPartidoSimple;
     private javax.swing.JButton btnJugador;
+    private javax.swing.JButton btnRepoEquipoMayorSaciones;
+    private javax.swing.JButton btnReporPartidoComplejo;
     private javax.swing.JButton btnReportPartidos;
     private javax.swing.JButton btnReporteEdadJugador;
     private javax.swing.JButton btnUsuario;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
