@@ -88,6 +88,11 @@ public class Menu extends javax.swing.JFrame {
 
         btnEquipo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEquipo.setText("Equipo");
+        btnEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEquipoActionPerformed(evt);
+            }
+        });
 
         btnPartido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnPartido.setText("Partidos");
@@ -375,6 +380,12 @@ public class Menu extends javax.swing.JFrame {
         VistaReportIntermedioEquipoParticipacion vista = new VistaReportIntermedioEquipoParticipacion();
         vista.setVisible(true);
     }//GEN-LAST:event_btnEquipoParticipacionActionPerformed
+
+    private void btnEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipoActionPerformed
+        // TODO add your handling code here:
+        VistaEquipo vista = new VistaEquipo();
+        vista.setVisible(true);
+    }//GEN-LAST:event_btnEquipoActionPerformed
 
     /**
      * @param args the command line arguments

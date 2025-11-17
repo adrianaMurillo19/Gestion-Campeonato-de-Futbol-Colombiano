@@ -96,7 +96,7 @@ public class VistaPartido extends javax.swing.JFrame {
                 p.getArbitro_idUsuario()
             });
         }
-}
+    }
 
 
     /**
