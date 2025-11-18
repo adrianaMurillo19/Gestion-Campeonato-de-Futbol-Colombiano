@@ -24,10 +24,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        btnUsuario = new javax.swing.JButton();
         btnJugador = new javax.swing.JButton();
-        btnArbitro = new javax.swing.JButton();
-        btnDirecTecnico = new javax.swing.JButton();
         btnEquipo = new javax.swing.JButton();
         btnPartido = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -42,9 +39,9 @@ public class Menu extends javax.swing.JFrame {
         btnEquipoDTCiudad = new javax.swing.JButton();
         btnEquipoParticipacion = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnReporPartidoComplejo = new javax.swing.JButton();
+        btnRepoMaxIndices = new javax.swing.JButton();
+        btnRepoGoleadores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,35 +51,11 @@ public class Menu extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Gestión del sistema:");
 
-        btnUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnUsuario.setText("Usuario");
-        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsuarioActionPerformed(evt);
-            }
-        });
-
         btnJugador.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnJugador.setText("Jugador");
         btnJugador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJugadorActionPerformed(evt);
-            }
-        });
-
-        btnArbitro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnArbitro.setText("Arbitro");
-        btnArbitro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnArbitroActionPerformed(evt);
-            }
-        });
-
-        btnDirecTecnico.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnDirecTecnico.setText("Director Técnico");
-        btnDirecTecnico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDirecTecnicoActionPerformed(evt);
             }
         });
 
@@ -172,14 +145,14 @@ public class Menu extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Reportes Complejos");
 
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton8.setText("jButton8");
+        btnReporPartidoComplejo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnReporPartidoComplejo.setText("Reporte completo por partido");
 
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton9.setText("jButton9");
+        btnRepoMaxIndices.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRepoMaxIndices.setText("Equipos con Mayor Índice de Sanciones");
 
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton10.setText("jButton10");
+        btnRepoGoleadores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRepoGoleadores.setText("Maximo goleadores ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,13 +166,15 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnPartido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEquipo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDirecTecnico, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                            .addComponent(btnArbitro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnJugador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(209, 209, 209)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnPartido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                                .addComponent(btnJugador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(123, 123, 123)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,45 +185,34 @@ public class Menu extends javax.swing.JFrame {
                                 .addGap(22, 22, 22)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnGolesPorIDPartidoSimple)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(btnReporteEdadJugador)
-                                                        .addComponent(jLabel6)
-                                                        .addComponent(jButton8))
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                            .addGap(74, 74, 74)
-                                                            .addComponent(jButton9))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                            .addGap(46, 46, 46)
-                                                            .addComponent(btnReportPartidos)))
-                                                    .addGap(142, 142, 142))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(btnReporteJugadorEquipo)
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(btnReportePartidosFecha)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(btnEquipoDTCiudad)
-                                                    .addGap(12, 12, 12)))
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(70, 70, 70)
-                                                    .addComponent(jButton10))
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(18, 18, 18)
-                                                    .addComponent(btnEquipoParticipacion)))))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(209, 209, 209)
-                        .addComponent(jLabel3)))
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(btnReporteEdadJugador)
+                                                    .addComponent(jLabel6)
+                                                    .addComponent(btnReporPartidoComplejo))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(74, 74, 74)
+                                                        .addComponent(btnRepoMaxIndices))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(89, 89, 89)
+                                                        .addComponent(btnReportPartidos)))
+                                                .addGap(142, 142, 142))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnReporteJugadorEquipo)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnReportePartidosFecha)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnEquipoDTCiudad)
+                                                .addGap(85, 85, 85)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnEquipoParticipacion)
+                                            .addComponent(btnRepoGoleadores)
+                                            .addComponent(btnGolesPorIDPartidoSimple))))))))
+                .addContainerGap(42, Short.MAX_VALUE))
+            .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,20 +223,18 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnUsuario)
-                                .addGap(18, 18, 18)
+                                .addGap(63, 63, 63)
                                 .addComponent(btnJugador)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnArbitro)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnDirecTecnico)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEquipo)
                                 .addGap(18, 18, 18)
@@ -295,16 +257,12 @@ public class Menu extends javax.swing.JFrame {
                                     .addComponent(btnEquipoParticipacion))
                                 .addGap(41, 41, 41)
                                 .addComponent(jLabel6)))
-                        .addGap(27, 27, 27)
+                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9)
-                            .addComponent(jButton10))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addComponent(btnReporPartidoComplejo)
+                            .addComponent(btnRepoMaxIndices)
+                            .addComponent(btnRepoGoleadores))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -315,29 +273,11 @@ public class Menu extends javax.swing.JFrame {
         new VistaPartido().setVisible(true);
     }//GEN-LAST:event_btnPartidoActionPerformed
 
-    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
-        // Boton -> Usuario
-        
-        new VistaUsuario().setVisible(true);
-    }//GEN-LAST:event_btnUsuarioActionPerformed
-
     private void btnJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorActionPerformed
         // Boton -> Jugador
         
         new VistaJugador().setVisible(true);
     }//GEN-LAST:event_btnJugadorActionPerformed
-
-    private void btnArbitroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbitroActionPerformed
-        // Boton -> Arbitro
-        
-        new VistaArbitro().setVisible(true);
-    }//GEN-LAST:event_btnArbitroActionPerformed
-
-    private void btnDirecTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDirecTecnicoActionPerformed
-        // Boton -> Director Técnico
-        
-        new VistaDirecTecnico().setVisible(true);
-    }//GEN-LAST:event_btnDirecTecnicoActionPerformed
 
     private void btnReporteEdadJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteEdadJugadorActionPerformed
         // TODO add your handling code here:
@@ -423,22 +363,19 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnArbitro;
-    private javax.swing.JButton btnDirecTecnico;
     private javax.swing.JButton btnEquipo;
     private javax.swing.JButton btnEquipoDTCiudad;
     private javax.swing.JButton btnEquipoParticipacion;
     private javax.swing.JButton btnGolesPorIDPartidoSimple;
     private javax.swing.JButton btnJugador;
     private javax.swing.JButton btnPartido;
+    private javax.swing.JButton btnRepoGoleadores;
+    private javax.swing.JButton btnRepoMaxIndices;
+    private javax.swing.JButton btnReporPartidoComplejo;
     private javax.swing.JButton btnReportPartidos;
     private javax.swing.JButton btnReporteEdadJugador;
     private javax.swing.JButton btnReporteJugadorEquipo;
     private javax.swing.JButton btnReportePartidosFecha;
-    private javax.swing.JButton btnUsuario;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
