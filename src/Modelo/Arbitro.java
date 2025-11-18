@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.util.Date;
@@ -35,6 +34,13 @@ public class Arbitro {
         this.apellidoDos = apellidoDos;
         this.cedula = cedula;
         this.fechaNacimiento = fechaNacimiento;
+        this.tipo = tipo;
+    }
+    
+    public Arbitro(int id_arbitro, String nombreUno, String apellidoUno, String tipo) {
+        this.id_arbitro = id_arbitro;
+        this.nombreUno = nombreUno;
+        this.apellidoUno = apellidoUno;
         this.tipo = tipo;
     }
 
@@ -102,12 +108,13 @@ public class Arbitro {
         this.tipo = tipo;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Arbitro{" + "id_arbitro=" + id_arbitro + ", nombreUno=" + nombreUno + ", nombreDos=" + nombreDos + ", apellidoUno=" + apellidoUno + ", apellidoDos=" + apellidoDos + ", cedula=" + cedula + ", fechaNacimiento=" + fechaNacimiento + ", tipo=" + tipo + '}';
+    }*/
+    
+    public String toString() {
+        return "Arbitro{" + "id_arbitro=" + id_arbitro + ", nombreUno=" + nombreUno +  ", apellidoUno=" + apellidoUno + ", tipo=" + tipo + '}';
     }
-    
-    
-    
-    
+
 }

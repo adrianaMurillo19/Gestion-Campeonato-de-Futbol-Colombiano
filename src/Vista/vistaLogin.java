@@ -112,7 +112,7 @@ public class vistaLogin extends javax.swing.JFrame {
             Usuario usuario  = usuarioDAO.validarCredenciales(nombre_usuario, contrasenia);
             
             if(usuario != null){
-                new Menu().setVisible(true);
+                new VistaMenu().setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(null, "*****");
             }

@@ -1,4 +1,3 @@
-
 package Vista;
 
 
@@ -42,9 +41,8 @@ public class VistaJugador extends javax.swing.JFrame {
         tablaRegistrosJ.clearSelection();   
     }
     
-    /*Permite cargar el comboBox con el id y nombre de los equipos
-    */
-    private void cargarPartidosComboBox(){
+    //Permite cargar el comboBox con el id y nombre de los estadios
+    private void cargarEstadioComboBox(){
         
         try {
             equipoDAO = new EquipoDAO(conn);
@@ -92,7 +90,7 @@ public class VistaJugador extends javax.swing.JFrame {
      */
     public VistaJugador() {
         initComponents();
-        cargarPartidosComboBox();
+        cargarEstadioComboBox();
         cargarTablaJugadores();
         setLocationRelativeTo(null);
     }

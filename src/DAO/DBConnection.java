@@ -1,4 +1,3 @@
-
 package DAO;
 
 import java.sql.Connection;
@@ -13,7 +12,7 @@ public class DBConnection {
     
     static String url="jdbc:mysql://localhost:3306/gestioncampeonato";
     static String user="root";
-   static String pass="";
+   static String pass="Adr1ana123*";
     
    //getConnection
     public static Connection conectar()

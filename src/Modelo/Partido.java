@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.util.Date;
@@ -33,6 +32,7 @@ public class Partido {
         this.Arbitro_idUsuario = Arbitro_idUsuario;
     }
 
+
     public Partido(Date fechaJuego, String horaInicio, String resultadoFinal, int Estadio_idEstadio, int Arbitro_idUsuario) {
         this.fechaJuego = fechaJuego;
         this.horaInicio = horaInicio;
@@ -40,7 +40,12 @@ public class Partido {
         this.Estadio_idEstadio = Estadio_idEstadio;
         this.Arbitro_idUsuario = Arbitro_idUsuario;
     }
-
+    
+    // Constructor vacío
+    public Partido() {
+    }
+    
+    // Gets y sets
     public int getIdPartido() {
         return idPartido;
     }
@@ -56,6 +61,7 @@ public class Partido {
     public void setFechaJuego(Date fechaJuego) {
         this.fechaJuego = fechaJuego;
     }
+
 
     public String getHoraInicio() {
         return horaInicio;
@@ -89,13 +95,8 @@ public class Partido {
         this.Arbitro_idUsuario = Arbitro_idUsuario;
     }
 
-   
-    
-    
-
     @Override
     public String toString() {
         return "Partido{" + "idPartido=" + idPartido + ", fechaJuego=" + fechaJuego + ", horaInicio=" + horaInicio + ", resultadoFinal=" + resultadoFinal + ", Estadio_idEstadio=" + Estadio_idEstadio + ", Arbitro_idUsuario=" + Arbitro_idUsuario + '}';
     }
-      
 }

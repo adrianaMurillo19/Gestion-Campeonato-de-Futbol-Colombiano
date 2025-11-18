@@ -1,4 +1,5 @@
 
+
 package Modelo;
 
 
@@ -7,16 +8,20 @@ public class Ciudad {
     private int idCiudad;
     private String nombreCiudad;
 
+    private String nombre;
+
     public Ciudad() {
     }
 
-    public Ciudad(int idCiudad, String nombreCiudad) {
+    public Ciudad(int idCiudad, String nombreCiudad, String nombre) {
         this.idCiudad = idCiudad;
         this.nombreCiudad = nombreCiudad;
+        this.nombre = nombre;
     }
 
-    public Ciudad(String nombreCiudad) {
+    public Ciudad(String nombreCiudad, String nombre) {
         this.nombreCiudad = nombreCiudad;
+        this.nombre = nombre;
     }
 
     public int getIdCiudad() {
@@ -35,14 +40,26 @@ public class Ciudad {
         this.nombreCiudad = nombreCiudad;
     }
 
-    @Override
-    public String toString() {
-        return "Ciudad{" + "idCiudad=" + idCiudad + ", nombreCiudad=" + nombreCiudad + '}';
+    public String getNombre() {
+        return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
     
 
-    
-    
+   @Override
+    public String toString() {
+        return "Ciudad{" + 
+                "idCiudad=" + idCiudad + 
+                ", nombre=" + nombre + 
+                '}';
+    }
+  
+
+
     
 }

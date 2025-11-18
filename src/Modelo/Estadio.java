@@ -1,4 +1,3 @@
-
 package Modelo;
 
 
@@ -17,8 +16,13 @@ public class Estadio {
         this.capacidad = capacidad;
         this.Ciudad_idCiudad = Ciudad_idCiudad;
     }
-
     
+    public Estadio(int idEstadio, String nombre, int capacidad) {
+        this.idEstadio = idEstadio;
+        this.nombre = nombre;
+        this.capacidad = capacidad;
+    }
+
     public Estadio(int idEstadio, String nombre, int capacidad, int Ciudad_idCiudad) {
         this.idEstadio = idEstadio;
         this.nombre = nombre;
@@ -58,12 +62,15 @@ public class Estadio {
         this.Ciudad_idCiudad = Ciudad_idCiudad;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "Estadio{" + "idEstadio=" + idEstadio + ", nombre=" + nombre + ", capacidad=" + capacidad + ", Ciudad_idCiudad=" + Ciudad_idCiudad + '}';
     }
+    */
+    @Override
+    public String toString() {
+        return "Estadio{" + "idEstadio=" + idEstadio + ", nombre=" + nombre  + '}';
+    }
     
-    
-    
-    
+
 }

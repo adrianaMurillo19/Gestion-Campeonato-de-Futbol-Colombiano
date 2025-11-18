@@ -7,6 +7,8 @@ import java.util.Date;
 public class DirectorTecnico {
     
      private int id_arbitro;
+
+    private int id_director_tecnico;
     private String nombreUno;
     private String nombreDos;
     private String apellidoUno;
@@ -14,14 +16,17 @@ public class DirectorTecnico {
     private String cedula;
     private Date fechaNacimiento;
     private String tipo;
-    
-    
+    private String experiencia;
+
 
     public DirectorTecnico() {
     }
 
-    public DirectorTecnico(int id_arbitro, String nombreUno, String nombreDos, String apellidoUno, String apellidoDos, String cedula, Date fechaNacimiento, String tipo) {
-        this.id_arbitro = id_arbitro;
+   
+
+    public DirectorTecnico(int id_director_tecnico, String nombreUno, String nombreDos, String apellidoUno, String apellidoDos, String cedula, Date fechaNacimiento, String experiencia) {
+        this.id_director_tecnico = id_director_tecnico;
+
         this.nombreUno = nombreUno;
         this.nombreDos = nombreDos;
         this.apellidoUno = apellidoUno;
@@ -31,7 +36,8 @@ public class DirectorTecnico {
         this.tipo = tipo;
     }
 
-    public DirectorTecnico(String nombreUno, String nombreDos, String apellidoUno, String apellidoDos, String cedula, Date fechaNacimiento, String tipo) {
+    public DirectorTecnico(int id_director_tecnico, String nombreUno, String nombreDos, String apellidoUno, String apellidoDos, String cedula, Date fechaNacimiento, String tipo, String experiencia) {
+        this.id_director_tecnico = id_director_tecnico;
         this.nombreUno = nombreUno;
         this.nombreDos = nombreDos;
         this.apellidoUno = apellidoUno;
@@ -39,7 +45,20 @@ public class DirectorTecnico {
         this.cedula = cedula;
         this.fechaNacimiento = fechaNacimiento;
         this.tipo = tipo;
+        this.experiencia = experiencia;
     }
+
+    public String getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(String experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    
+
+    
 
     public int getId_arbitro() {
         return id_arbitro;
@@ -47,6 +66,24 @@ public class DirectorTecnico {
 
     public void setId_arbitro(int id_arbitro) {
         this.id_arbitro = id_arbitro;
+
+        this.experiencia = experiencia;
+    }
+
+    public DirectorTecnico(int id_director_tecnico, String nombreUno,
+                           String apellidoUno, String experiencia) {
+        this.id_director_tecnico = id_director_tecnico;
+        this.nombreUno = nombreUno;
+        this.apellidoUno = apellidoUno;
+        this.experiencia = experiencia;
+    }
+
+    public int getId_director_tecnico() {
+        return id_director_tecnico;
+    }
+
+    public void setId_director_tecnico(int id_director_tecnico) {
+        this.id_director_tecnico = id_director_tecnico;
     }
 
     public String getNombreUno() {
@@ -97,6 +134,7 @@ public class DirectorTecnico {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+
     public String getTipo() {
         return tipo;
     }
@@ -105,13 +143,20 @@ public class DirectorTecnico {
         this.tipo = tipo;
     }
 
-    @Override
+
+
+     @Override
     public String toString() {
-        return "DirectorTecnico{" + "id_arbitro=" + id_arbitro + ", nombreUno=" + nombreUno + ", nombreDos=" + nombreDos + ", apellidoUno=" + apellidoUno + ", apellidoDos=" + apellidoDos + ", cedula=" + cedula + ", fechaNacimiento=" + fechaNacimiento + ", tipo=" + tipo + '}';
-    }
-    
-    
-    
-    
-    
+        return "DirectorTecnico{" +
+                "id_director_tecnico=" + id_director_tecnico +
+                ", nombreUno=" + nombreUno +
+                ", apellidoUno=" + apellidoUno +
+                '}';
+    } 
+
 }
+    
+    
+ 
+
+
