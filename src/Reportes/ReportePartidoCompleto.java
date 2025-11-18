@@ -4,7 +4,7 @@ package Reportes;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import Modelo.PartidoCompletoDTO;
+import DTO.PartidoCompletoDTO;
 import Modelo.*;
 
 

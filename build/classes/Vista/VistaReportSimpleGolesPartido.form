@@ -34,17 +34,17 @@
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnGenerar" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="combBoxPartido" alignment="0" min="-2" pref="440" max="-2" attributes="0"/>
+                          <Component id="combBoxPartido" min="-2" pref="289" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

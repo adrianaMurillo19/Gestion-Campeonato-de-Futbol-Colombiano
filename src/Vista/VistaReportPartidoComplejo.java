@@ -6,7 +6,7 @@ import DAO.DBConnection;
 import DAO.PartidoCompletoDAO;
 import DAO.PartidoDAO;
 import Modelo.Partido;
-import Modelo.PartidoCompletoDTO;
+import DTO.PartidoCompletoDTO;
 import Reportes.ReportePartidoCompleto;
 import java.sql.*;
 import java.util.List;

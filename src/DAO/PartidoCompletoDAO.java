@@ -8,7 +8,7 @@ import Modelo.Estadio;
 import Modelo.Gol;
 import Modelo.Jugador;
 import Modelo.Partido;
-import Modelo.PartidoCompletoDTO;
+import DTO.PartidoCompletoDTO;
 import Modelo.Sustitucion;
 import Modelo.Tarjeta;
 import java.sql.*;

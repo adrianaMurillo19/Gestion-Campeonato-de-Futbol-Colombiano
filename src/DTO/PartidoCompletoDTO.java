@@ -1,5 +1,13 @@
-package Modelo;
+package DTO;
 
+import Modelo.Arbitro;
+import Modelo.Ciudad;
+import Modelo.Equipo;
+import Modelo.Estadio;
+import Modelo.Gol;
+import Modelo.Jugador;
+import Modelo.Sustitucion;
+import Modelo.Tarjeta;
 import java.util.List;
 
 import java.sql.*;
